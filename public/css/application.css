@@ -5,6 +5,7 @@
   border: 1px dotted black;
 }
 
-th {
-  text-align: left;
+button a {
+  text-decoration: none;
+  color: black;
 }

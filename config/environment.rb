@@ -16,10 +16,11 @@ require 'active_record'
 require 'logger'
 
 require 'sinatra'
-require "sinatra/reloader" if development?
+require 'shotgun'
 
 require 'erb'
 
+require 'oauth'
 require 'twitter'
 
 # Some helper constants for path-centric logic
@@ -34,16 +35,7 @@ Dir[APP_ROOT.join('app', 'helpers', '*.rb')].each { |file| require file }
 # Set up the database and models
 require APP_ROOT.join('config', 'database')
 
-env_config = YAML.load_file(APP_ROOT.join('config','twitter.yaml'))
-
-env_config.each do |key,value|
-  ENV[key] = value
-end
-
-# Twitter configuration
 Twitter.configure do |config|
-  config.consumer_key = ENV['consumer_key']
-  config.consumer_secret = ENV['consumer_secret']
-  config.oauth_token = ENV['access_token']
-  config.oauth_token_secret = ENV['access_token_secret']
+  config.consumer_key = ENV['TWITTER_KEY']
+  config.consumer_secret = ENV['TWITTER_SECRET']
 end
